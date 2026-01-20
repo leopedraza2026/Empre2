@@ -129,35 +129,35 @@
         
         .modal-content {
             background: white;
-            width: 90%; max-width: 500px;
+            width: 90%; max-width: 400px;
             padding: 2rem;
             border-radius: 20px;
             box-shadow: var(--shadow);
             transform: scale(0.9);
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column; max-height: 85vh;
+            display: flex; flex-direction: column;
         }
         .modal-overlay.active .modal-content { transform: scale(1); }
         
         .modal-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary-blue); margin-bottom: 1.5rem; text-align: center; }
 
-        /* --- ESTILOS PARA COMENTARIOS (Oculto UI, pero se mantiene lógica interna por si acaso) --- */
+        /* --- ESTILOS PARA LIKES --- */
         .social-actions {
             display: flex;
             gap: 10px;
             margin-top: 15px;
             margin-bottom: 15px;
-            justify-content: center; /* Centrado porque solo queda un botón */
+            justify-content: center; /* Centrado porque ahora hay solo un botón social */
         }
         
         .btn-action-like {
-            width: 100%; /* Botón completo al quitar el de comentarios */
-            padding: 12px;
+            width: 100%; /* Ancho completo para el único botón */
+            padding: 10px;
             border: 1px solid #eee;
             background: #fff;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #555;
             display: flex;
             align-items: center;
@@ -166,11 +166,53 @@
             transition: 0.2s;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-        .btn-action-like:hover { background: #fff0f0; color: var(--accent-orange); border-color: var(--accent-orange); }
+        .btn-action-like:hover { background: #fff0f0; color: var(--accent-orange); border-color: var(--accent-orange); transform: scale(1.05); }
         .btn-action-like.liked { color: var(--accent-orange); border-color: var(--accent-orange); background: #fff0f0; }
 
+        /* --- NUEVO: PERFIL MINI EN TARJETA DE PRODUCTO --- */
+        .store-mini-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f4f7f6;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+        }
+        .store-mini-logo {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+        .store-mini-details { flex: 1; display: flex; align-items: center; justify-content: space-between; }
+        .store-mini-name { font-size: 0.85rem; font-weight: bold; color: var(--primary-blue); line-height: 1.2; }
+        .store-mini-loc { font-size: 0.7rem; color: #777; }
+        
+        .btn-mini-follow {
+            font-size: 0.7rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--accent-gold);
+            background: white;
+            color: var(--primary-blue);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .btn-mini-follow:hover { background: #fffdf0; }
+        .btn-mini-follow.following { background: var(--accent-gold); color: var(--primary-blue); font-weight: bold; border-color: var(--accent-gold); }
+
         /* --- HEADER & NAVEGACIÓN RESPONSIVE --- */
-        header { background-color: rgba(255,255, 255, 0.95); backdrop-filter: blur(10px); padding: 1rem 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        header { background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 1rem 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .navbar { display: flex; justify-content: space-between; align-items: center; position: relative; }
         
         .logo { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--primary-blue); display: flex; align-items: center; gap: 10px; }
@@ -279,48 +321,6 @@
         }
         .autosave-indicator.visible { opacity: 1; }
 
-        /* --- PERFIL MINI EN TARJETA DE PRODUCTO --- */
-        .store-mini-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #f4f7f6;
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin-top: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #eee;
-        }
-        .store-mini-logo {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            flex-shrink: 0;
-        }
-        .store-mini-details { flex: 1; display: flex; align-items: center; justify-content: space-between; }
-        .store-mini-name { font-size: 0.85rem; font-weight: bold; color: var(--primary-blue); line-height: 1.2; }
-        .store-mini-loc { font-size: 0.7rem; color: #777; }
-        
-        .btn-mini-follow {
-            font-size: 0.7rem;
-            padding: 6px 12px;
-            border-radius: 20px;
-            border: 1px solid var(--accent-gold);
-            background: white;
-            color: var(--primary-blue);
-            cursor: pointer;
-            white-space: nowrap;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .btn-mini-follow:hover { background: #fffdf0; }
-        .btn-mini-follow.following { background: var(--accent-gold); color: var(--primary-blue); font-weight: bold; border-color: var(--accent-gold); }
-
     </style>
 </head>
 <body>
@@ -342,11 +342,11 @@
         </div>
     </div>
 
-    <!-- Modal de Invitado (Para Email y Nombre) -->
+    <!-- Modal de Invitado (Solo Nombre y Correo) -->
     <div id="guest-modal" class="modal-overlay">
         <div class="modal-content">
             <h3 class="modal-title">👤 Identificación Necesaria</h3>
-            <p style="text-align:center; color:#666; margin-bottom:20px; font-size:0.9rem;">Para interactuar con la tienda, necesitamos tus datos.</p>
+            <p style="text-align:center; color:#666; margin-bottom:20px; font-size:0.9rem;">Para interactuar (Me gusta/Seguir), necesitamos tu correo.</p>
             
             <div class="form-group">
                 <label>Tu Nombre</label>
@@ -683,7 +683,6 @@
 
     <script>
         // --- VARIABLES GLOBALES ---
-        let currentCommentProductId = null;
         let pendingAction = null; 
 
         // Datos del cliente temporal (no vendedor)
@@ -741,7 +740,67 @@
             modal.classList.remove('active');
         }
 
-        // --- SISTEMA DE MODAL (Invitado) ---
+        // --- LÓGICA DE SEGUIR TIENDA ---
+        function followStore(username) {
+            // Asegurar datos del cliente
+            checkGuestInfo(() => {
+                const user = users.find(u => u.user === username);
+                if(user) {
+                    if(!user.followers) user.followers = [];
+                    
+                    const emailIndex = user.followers.indexOf(guestInfo.email);
+                    
+                    if(emailIndex === -1) {
+                        user.followers.push(guestInfo.email);
+                        saveData();
+                        showToast("¡Siguiendo tienda! Te notificaremos cuando haya novedades.");
+                        if(document.getElementById('view-stores').classList.contains('hidden') === false) renderStoresList();
+                        else filterProducts(); 
+                    } else {
+                        user.followers.splice(emailIndex, 1);
+                        saveData();
+                        showToast("Has dejado de seguir esta tienda.");
+                        if(document.getElementById('view-stores').classList.contains('hidden') === false) renderStoresList();
+                        else filterProducts();
+                    }
+                }
+            });
+        }
+
+        // --- LÓGICA DE LIKES (Uno por persona) ---
+        function likeProduct(id, btnElement) {
+            checkGuestInfo(() => {
+                const product = products.find(p => p.id === id);
+                if(product) {
+                    // Inicializar array de emails si no existe
+                    if(!product.likedBy) {
+                        // Si es legacy (número), limpiamos para empezar sistema nuevo estricto
+                        if(typeof product.likes === 'number') product.likedBy = []; 
+                        else product.likedBy = [];
+                    }
+
+                    const email = guestInfo.email;
+                    const alreadyLiked = product.likedBy.includes(email);
+
+                    if(!alreadyLiked) {
+                        product.likedBy.push(email);
+                        saveData();
+                        
+                        // Actualizar UI (Conteo del array)
+                        const span = btnElement.querySelector('span');
+                        if(span) span.innerText = product.likedBy.length;
+                        
+                        // Animación visual
+                        btnElement.classList.add('liked');
+                        setTimeout(() => btnElement.classList.remove('liked'), 300);
+                    } else {
+                        showToast("¡Ya diste Me gusta a esta prenda!", "info");
+                    }
+                }
+            });
+        }
+
+        // --- SISTEMA DE INVITADO (LOGIN RÁPIDO) ---
         function checkGuestInfo(callback) {
             if(guestInfo) {
                 callback();
@@ -769,65 +828,6 @@
                 pendingAction();
                 pendingAction = null;
             }
-        }
-
-        // --- LÓGICA DE SEGUIR TIENDA ---
-        function followStore(username) {
-            // Asegurar datos del cliente
-            checkGuestInfo(() => {
-                const user = users.find(u => u.user === username);
-                if(user) {
-                    if(!user.followers) user.followers = [];
-                    
-                    const emailIndex = user.followers.indexOf(guestInfo.email);
-                    
-                    if(emailIndex === -1) {
-                        user.followers.push(guestInfo.email);
-                        saveData();
-                        showToast("¡Siguiendo tienda! Te notificaremos cuando haya novedades.");
-                        // Si estamos en la vista de tiendas o catalogo, refrescar
-                        if(document.getElementById('view-stores').classList.contains('hidden') === false) renderStoresList();
-                        else filterProducts(); 
-                    } else {
-                        user.followers.splice(emailIndex, 1);
-                        saveData();
-                        showToast("Has dejado de seguir esta tienda.");
-                        if(document.getElementById('view-stores').classList.contains('hidden') === false) renderStoresList();
-                        else filterProducts();
-                    }
-                }
-            });
-        }
-
-        // --- LÓGICA DE LIKES (UNO POR PERSONA) ---
-        function likeProduct(id, btnElement) {
-            checkGuestInfo(() => {
-                const product = products.find(p => p.id === id);
-                if(product) {
-                    // Migración: Si likes es número entero, convertir a array vacío
-                    if(typeof product.likes === 'number') product.likes = [];
-
-                    const email = guestInfo.email;
-
-                    // Verificar si ya le dio like
-                    if(product.likes.includes(email)) {
-                        showToast("¡Ya te gusta este producto!", "info");
-                        return;
-                    }
-
-                    // Si no, añadir
-                    product.likes.push(email);
-                    saveData();
-                    
-                    // Actualizar UI (Longitud del array)
-                    const span = btnElement.querySelector('span');
-                    if(span) span.innerText = product.likes.length;
-                    
-                    // Animación visual
-                    btnElement.classList.add('liked');
-                    setTimeout(() => btnElement.classList.remove('liked'), 300);
-                }
-            });
         }
 
         function openAddUserModal() {
@@ -944,7 +944,7 @@
             saveDrafts();
         });
 
-        // --- DATOS INICIALES (LIKES AHORA SON ARRAYS VACÍAS) ---
+        // --- DATOS INICIALES ---
         const defaultUsers = [
             { 
                 user: 'admin', pass: '1234', role: 'admin', phone: '61348083', 
@@ -959,10 +959,10 @@
         ];
 
         const defaultProducts = [
-            // Likes ahora es un array vacío
-            { id: 1, name: "Blazer Elegante", category: "Chaqueta", price: 250, dept: "La Paz", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=1936", seller: "vendedor", desc: "Elegancia pura.", sellerPhone: "71234567", stock: 5, likes: [], comments: [] },
-            { id: 2, name: "Vestido Floral", category: "Vestido", price: 180, dept: "Santa Cruz", img: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1887", seller: "vendedor", desc: "Para el verano.", sellerPhone: "71234567", stock: 10, likes: [], comments: [] },
-            { id: 3, name: "Zapatillas Urbanas", category: "Zapatillas", price: 300, dept: "Cochabamba", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070", seller: "admin", desc: "Estilo urbano.", sellerPhone: "61348083", stock: 2, likes: [], comments: [] }
+            // Actualizado: Ya no usa 'comments', usa 'likedBy' (array vacía)
+            { id: 1, name: "Blazer Elegante", category: "Chaqueta", price: 250, dept: "La Paz", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=1936", seller: "vendedor", desc: "Elegancia pura.", sellerPhone: "71234567", stock: 5, likedBy: [] },
+            { id: 2, name: "Vestido Floral", category: "Vestido", price: 180, dept: "Santa Cruz", img: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1887", seller: "vendedor", desc: "Para el verano.", sellerPhone: "71234567", stock: 10, likedBy: [] },
+            { id: 3, name: "Zapatillas Urbanas", category: "Zapatillas", price: 300, dept: "Cochabamba", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070", seller: "admin", desc: "Estilo urbano.", sellerPhone: "61348083", stock: 2, likedBy: [] }
         ];
 
         let users = JSON.parse(localStorage.getItem('bo_users')) || defaultUsers;
@@ -1068,9 +1068,10 @@
                 const logo = s.storeLogo || 'https://via.placeholder.com/80?text=Logo';
                 const cover = s.storeCover || 'https://via.placeholder.com/300x150?text=Portada';
                 
+                // Verificar si el usuario actual (invitado) sigue esta tienda
                 const isFollowing = guestInfo && s.followers && s.followers.includes(guestInfo.email);
                 const followBtnText = isFollowing ? "✓ Siguiendo" : "🔔 Seguir";
-                const followBtnClass = isFollowing ? "btn-sm following" : "btn-sm btn-gold";
+                const followBtnClass = isFollowing ? "btn-sm following" : "btn-sm btn-gold"; 
 
                 card.innerHTML = `
                     <img src="${cover}" class="store-cover">
@@ -1191,7 +1192,7 @@
                 delete drafts['profile-phone'];
                 localStorage.setItem('bo_drafts', JSON.stringify(drafts));
                 
-                btn.innerText = "Guardado √";
+                btn.innerText = "Guardado ✓";
                 btn.classList.add('btn-action-save');
                 showToast("Perfil actualizado");
                 
@@ -1248,7 +1249,7 @@
                 delete drafts['store-dept-input'];
                 localStorage.setItem('bo_drafts', JSON.stringify(drafts));
                 
-                btn.innerText = "Guardado √";
+                btn.innerText = "Guardado ✓";
                 btn.classList.add('btn-action-save');
                 showToast("¡Mini Tienda configurada!");
                 
@@ -1278,7 +1279,7 @@
             const dept = document.getElementById('prod-dept').value;
             const desc = document.getElementById('prod-desc').value;
             
-            if(!name || !price) return showToast("Faltan datos obligatorios", 'error");
+            if(!name || !price) return showToast("Faltan datos obligatorios", 'error');
 
             const btn = document.getElementById('btn-add-product');
             const originalText = btn.innerText;
@@ -1291,8 +1292,7 @@
                     img: tempProdImg || `https://picsum.photos/seed/${Date.now()}/300/300`,
                     seller: currentUser.user,
                     sellerPhone: currentUser.phone || "61348083",
-                    likes: [], // Array vacío
-                    comments: []
+                    likedBy: [] // Array vacío para likes nuevos
                 };
                 
                 products.unshift(newProd);
@@ -1316,7 +1316,7 @@
                 
                 saveDrafts(); 
                 
-                btn.innerText = "Guardado √";
+                btn.innerText = "Guardado ✓";
                 btn.classList.add('btn-action-save');
                 
                 renderMyProducts();
@@ -1381,14 +1381,9 @@
                 }
                 const followBtnText = isFollowing ? "Siguiendo" : "Seguir";
                 const followBtnClass = isFollowing ? "btn-mini-follow following" : "btn-mini-follow";
-
-                // LÓGICA DE LIKES (VERIFICACIÓN UNICA POR PERSONA)
-                let userLiked = false;
-                let likeCount = 0;
-                if(Array.isArray(p.likes)) {
-                    userLiked = guestInfo && p.likes.includes(guestInfo.email);
-                    likeCount = p.likes.length;
-                }
+                
+                // Contador de Likes (longitud del array)
+                const likesCount = p.likedBy ? p.likedBy.length : 0;
 
                 grid.innerHTML += `
                     <div class="product-card">
@@ -1399,7 +1394,7 @@
                             <div class="product-price">Bs. ${p.price}</div>
                             <p style="font-size:0.85rem; color:#666;">${p.desc}</p>
                             
-                            <!-- SECCIÓN: PERFIL MINI DE TIENDA -->
+                            <!-- NUEVO SECCIÓN: PERFIL MINI DE TIENDA -->
                             <div class="store-mini-profile">
                                 <img src="${storeLogo}" class="store-mini-logo">
                                 <div class="store-mini-details">
@@ -1413,10 +1408,10 @@
                                 </div>
                             </div>
                             
-                            <!-- SOLO UN BOTÓN SOCIAL: ME GUSTA (Sin comentarios) -->
+                            <!-- NUEVA POSICIÓN: ACCIÓN SOCIAL (SOLO LIKE) -->
                             <div class="social-actions">
-                                <button class="btn-action-like ${userLiked ? 'liked' : ''}" onclick="likeProduct(${p.id}, this)">
-                                    ❤️ <span id="likes-count-${p.id}">${likeCount}</span>
+                                <button class="btn-action-like" onclick="likeProduct(${p.id}, this)">
+                                    ❤️ <span id="likes-count-${p.id}">${likesCount}</span>
                                 </button>
                             </div>
 
