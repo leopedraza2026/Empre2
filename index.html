@@ -69,6 +69,21 @@
         .btn-sm { padding: 8px 15px; font-size: 0.75rem; border-radius: 15px; width: 100%; margin-top: 5px; }
         .btn-action-save { background-color: var(--accent-green) !important; }
 
+        /* --- NUEVO: BADGES DE TIPO DE TIENDA --- */
+        .store-type-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: inline-block;
+            letter-spacing: 0.5px;
+            margin-left: 5px;
+        }
+        .type-online { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .type-physical { background-color: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
+        .type-hybrid { background-color: #fff3e0; color: #ef6c00; border: 1px solid #ffe0b2; }
+
         /* --- SISTEMA DE TOAST NOTIFICATIONS --- */
         #toast-container {
             position: fixed;
@@ -147,11 +162,11 @@
             gap: 10px;
             margin-top: 15px;
             margin-bottom: 15px;
-            justify-content: center; /* Centrado porque ahora hay solo un botón social */
+            justify-content: center;
         }
         
         .btn-action-like {
-            width: 100%; /* Ancho completo para el único botón */
+            width: 100%;
             padding: 10px;
             border: 1px solid #eee;
             background: #fff;
@@ -190,14 +205,14 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             flex-shrink: 0;
         }
-        .store-mini-details { flex: 1; display: flex; align-items: center; justify-content: space-between; }
-        .store-mini-name { font-size: 0.85rem; font-weight: bold; color: var(--primary-blue); line-height: 1.2; }
-        .store-mini-loc { font-size: 0.7rem; color: #777; }
+        .store-mini-details { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .store-mini-name { font-size: 0.85rem; font-weight: bold; color: var(--primary-blue); line-height: 1.2; display: flex; align-items: center; }
+        .store-mini-loc { font-size: 0.7rem; color: #777; display: flex; align-items: center; gap: 4px; margin-top: 2px; }
         
         .btn-mini-follow {
-            font-size: 0.7rem;
-            padding: 6px 12px;
-            border-radius: 20px;
+            font-size: 0.65rem;
+            padding: 4px 8px;
+            border-radius: 12px;
             border: 1px solid var(--accent-gold);
             background: white;
             color: var(--primary-blue);
@@ -206,7 +221,7 @@
             transition: 0.2s;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 2px;
         }
         .btn-mini-follow:hover { background: #fffdf0; }
         .btn-mini-follow.following { background: var(--accent-gold); color: var(--primary-blue); font-weight: bold; border-color: var(--accent-gold); }
@@ -257,9 +272,9 @@
         .store-logo-container { width: 80px; height: 80px; margin: -40px auto 10px; position: relative; z-index: 2; border-radius: 50%; border: 4px solid white; overflow: hidden; background: #eee; }
         .store-logo { width: 100%; height: 100%; object-fit: cover; }
         .store-info { padding: 0 20px; }
-        .store-name { font-size: 1.3rem; font-weight: 800; color: var(--primary-blue); margin-bottom: 5px; }
+        .store-name { font-size: 1.3rem; font-weight: 800; color: var(--primary-blue); margin-bottom: 5px; display: flex; justify-content: center; align-items: center; gap: 5px; }
         .store-seller { color: var(--text-light); font-size: 0.9rem; margin-bottom: 5px; }
-        .store-loc { display: inline-block; background: #eee; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; color: #555; margin-bottom: 15px; }
+        .store-loc { display: inline-flex; align-items: center; gap: 5px; background: #eee; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; color: #555; margin-bottom: 15px; }
 
         /* --- OTRAS VISTAS --- */
         .view-section { padding: 4rem 0; min-height: 80vh; animation: snapIn 0.2s ease forwards; }
@@ -512,6 +527,16 @@
                         <div class="form-group">
                             <label>Nombre de la Tienda</label>
                             <input type="text" id="store-name-input" class="form-control input-draft" placeholder="Ej: Modas de Carla">
+                        </div>
+
+                        <!-- NUEVO: Selector de Tipo de Tienda -->
+                        <div class="form-group">
+                            <label>🏷️ Tipo de Tienda (Aviso Público)</label>
+                            <select id="store-type-input" class="form-control input-draft">
+                                <option value="online">🌐 Online (Solo Envíos)</option>
+                                <option value="fisica">🏬 Física (Solo Presencial)</option>
+                                <option value="hibrida">🏪 Online + Física (Híbrida)</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -863,13 +888,23 @@
                 users.push({
                     user:u, pass:p, role:'vendedor', phone:ph, 
                     storeName:'', storeLogo:'', storeCover:'',
-                    fullname: u, storeDept: 'La Paz', followers: []
+                    fullname: u, storeDept: 'La Paz', storeType: 'online', followers: []
                 });
                 saveData();
                 renderUsers();
                 showToast("Vendedor creado con éxito");
                 return true;
             });
+        }
+
+        // --- NUEVO: GENERADOR DE HTML PARA BADGES DE TIPO DE TIENDA ---
+        function getStoreTypeBadgeHTML(type) {
+            switch(type) {
+                case 'fisica': return '<span class="store-type-badge type-physical">Tienda Física</span>';
+                case 'hibrida': return '<span class="store-type-badge type-hybrid">Online + Física</span>';
+                case 'online': 
+                default: return '<span class="store-type-badge type-online">Tienda Online</span>';
+            }
         }
 
         // --- UTILIDAD DE COMPRESIÓN DE IMÁGENES ---
@@ -949,17 +984,16 @@
             { 
                 user: 'admin', pass: '1234', role: 'admin', phone: '61348083', 
                 storeName: 'Oficial BO', storeLogo: 'https://picsum.photos/seed/logo1/100/100', storeCover: 'https://picsum.photos/seed/cover1/300/150', fullname: 'Administrador',
-                storeDept: 'La Paz', followers: []
+                storeDept: 'La Paz', storeType: 'hibrida', followers: []
             },
             { 
                 user: 'vendedor', pass: '1234', role: 'vendedor', phone: '71234567', 
                 storeName: 'Modas Juan', storeLogo: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=150', storeCover: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?q=80&w=300', fullname: 'Juan Pérez',
-                storeDept: 'Santa Cruz', followers: ['cliente1@mail.com'] // Ejemplo de seguidor
+                storeDept: 'Santa Cruz', storeType: 'online', followers: ['cliente1@mail.com']
             }
         ];
 
         const defaultProducts = [
-            // Actualizado: Ya no usa 'comments', usa 'likedBy' (array vacía)
             { id: 1, name: "Blazer Elegante", category: "Chaqueta", price: 250, dept: "La Paz", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=1936", seller: "vendedor", desc: "Elegancia pura.", sellerPhone: "71234567", stock: 5, likedBy: [] },
             { id: 2, name: "Vestido Floral", category: "Vestido", price: 180, dept: "Santa Cruz", img: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1887", seller: "vendedor", desc: "Para el verano.", sellerPhone: "71234567", stock: 10, likedBy: [] },
             { id: 3, name: "Zapatillas Urbanas", category: "Zapatillas", price: 300, dept: "Cochabamba", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070", seller: "admin", desc: "Estilo urbano.", sellerPhone: "61348083", stock: 2, likedBy: [] }
@@ -1068,6 +1102,9 @@
                 const logo = s.storeLogo || 'https://via.placeholder.com/80?text=Logo';
                 const cover = s.storeCover || 'https://via.placeholder.com/300x150?text=Portada';
                 
+                // Badge de Tipo de Tienda
+                const typeBadge = getStoreTypeBadgeHTML(s.storeType);
+                
                 // Verificar si el usuario actual (invitado) sigue esta tienda
                 const isFollowing = guestInfo && s.followers && s.followers.includes(guestInfo.email);
                 const followBtnText = isFollowing ? "✓ Siguiendo" : "🔔 Seguir";
@@ -1080,6 +1117,7 @@
                     </div>
                     <div class="store-info">
                         <h3 class="store-name">${s.storeName}</h3>
+                        <div style="margin-bottom:5px;">${typeBadge}</div>
                         <p class="store-seller">Vendedor: ${s.fullname || s.user}</p>
                         <div class="store-loc">📍 ${s.storeDept || 'Bolivia'}</div>
                         <div class="store-actions">
@@ -1106,6 +1144,7 @@
             document.getElementById('profile-fullname').value = currentUser.fullname || '';
             document.getElementById('profile-phone').value = currentUser.phone || '';
             document.getElementById('store-name-input').value = currentUser.storeName || '';
+            document.getElementById('store-type-input').value = currentUser.storeType || 'online'; // Cargar tipo
             document.getElementById('store-dept-input').value = currentUser.storeDept || 'La Paz';
             
             if(currentUser.storeLogo) {
@@ -1229,6 +1268,7 @@
 
         function saveStoreConfig() {
             const name = document.getElementById('store-name-input').value;
+            const type = document.getElementById('store-type-input').value; // Guardar tipo
             const dept = document.getElementById('store-dept-input').value;
             if(!name) return showToast("Ponle un nombre a tu tienda", 'error');
             
@@ -1238,6 +1278,7 @@
 
             setTimeout(() => {
                 currentUser.storeName = name;
+                currentUser.storeType = type; // Guardar tipo en objeto usuario
                 currentUser.storeDept = dept;
                 if(tempStoreLogo) currentUser.storeLogo = tempStoreLogo;
                 if(tempStoreCover) currentUser.storeCover = tempStoreCover;
@@ -1246,6 +1287,7 @@
 
                 const drafts = JSON.parse(localStorage.getItem('bo_drafts')) || {};
                 delete drafts['store-name-input'];
+                delete drafts['store-type-input'];
                 delete drafts['store-dept-input'];
                 localStorage.setItem('bo_drafts', JSON.stringify(drafts));
                 
@@ -1373,6 +1415,7 @@
                 const seller = users.find(u => u.user === p.seller);
                 const storeLogo = seller?.storeLogo || 'https://via.placeholder.com/40/40.png';
                 const storeName = seller?.storeName || seller?.fullname || p.seller;
+                const storeTypeBadge = getStoreTypeBadgeHTML(seller?.storeType);
                 
                 // Verificar estado de seguimiento
                 let isFollowing = false;
@@ -1398,13 +1441,15 @@
                             <div class="store-mini-profile">
                                 <img src="${storeLogo}" class="store-mini-logo">
                                 <div class="store-mini-details">
-                                    <div>
-                                        <div class="store-mini-name">${storeName}</div>
-                                        <div class="store-mini-loc">📍 ${p.dept}</div>
+                                    <div class="store-mini-name">
+                                        ${storeName}
+                                        ${storeTypeBadge}
                                     </div>
-                                    <button class="${followBtnClass}" onclick="followStore('${p.seller}')">
-                                        ${isFollowing ? '✓' : '+'} ${followBtnText}
-                                    </button>
+                                    <div class="store-mini-loc">
+                                        <button class="${followBtnClass}" onclick="followStore('${p.seller}')">
+                                            ${isFollowing ? '✓' : '+'} ${followBtnText}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             
